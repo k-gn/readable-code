@@ -102,8 +102,8 @@ public class MinesweeperGame {
         return gameStatus == 1;
     }
 
+    // check 라는 이름은 통상적으로 void 를 반환한다.
     private static void checkIfGameIsOver() {
-        // check 라는 이름은 통상적으로 void 를 반환한다.
         boolean isAllOpened = isAllCellOpened();
         if (isAllOpened) {
             changeGameStatusToWin();
