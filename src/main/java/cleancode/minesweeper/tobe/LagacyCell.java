@@ -2,7 +2,7 @@ package cleancode.minesweeper.tobe;
 
 // getter, setter 지양
 
-public class Cell {
+public class LagacyCell {
 
 	public static final String FLAG_SIGN = "⚑";
 	public static final String LAND_MINE_SIGN = "☼";
@@ -28,7 +28,7 @@ public class Cell {
 		      -> 사용자의 행위에 따라 cell 의 상태를 변화시키는 방향으로 변경
 	 */
 
-	public Cell(
+	public LagacyCell(
 		int nearByLandMineCount,
 		boolean isLandMine,
 		boolean isFlagged,
@@ -40,16 +40,16 @@ public class Cell {
 		this.isOpened = isOpened;
 	}
 
-	public static Cell of(
+	public static LagacyCell of(
 		int nearByLandMineCount,
 		boolean isLandMine,
 		boolean isFlagged,
 		boolean isOpened
 	) {
-		return new Cell(nearByLandMineCount, isLandMine, isFlagged, isOpened);
+		return new LagacyCell(nearByLandMineCount, isLandMine, isFlagged, isOpened);
 	}
 
-	public static Cell create() {
+	public static LagacyCell create() {
 		return of(0, false, false, false);
 	}
 
