@@ -92,7 +92,7 @@ public class GameBoard {
 		int selectedColIndex,
 		int selectedRowIndex
 	) {
-		Cell cell = findCell(selectedColIndex, selectedRowIndex);
+		Cell cell = findCell(selectedRowIndex, selectedColIndex);
 		return cell.isLandMine();
 	}
 
@@ -105,7 +105,7 @@ public class GameBoard {
 		int rowIndex,
 		int colIndex
 	) {
-		return findCell(colIndex, rowIndex).getSign();
+		return findCell(rowIndex, colIndex).getSign();
 	}
 
 	private Cell findCell(

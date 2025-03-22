@@ -16,9 +16,9 @@ public class ConsoleOutputHandler {
 	}
 
 	public void showBoard(GameBoard board) {
-		String joiningAlphabets = generateColAlphabets(board);
+		String alphabets = generateColAlphabets(board);
 
-		System.out.println("   " + joiningAlphabets);
+		System.out.println("   " + alphabets);
 		for (int row = 0; row < board.getRowSize(); row++) {
 			System.out.printf("%2d  ", row + 1);
 			for (int col = 0; col < board.getColSize(); col++) {
@@ -36,8 +36,7 @@ public class ConsoleOutputHandler {
 			.map(Objects::toString)
 			.toList();
 
-		String joiningAlphabets = String.join(" ", alphabets);
-		return joiningAlphabets;
+		return String.join(" ", alphabets);
 	}
 
 	public void printGameWinningComment() {

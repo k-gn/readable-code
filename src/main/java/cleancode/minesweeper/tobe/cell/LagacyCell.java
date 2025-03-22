@@ -1,4 +1,4 @@
-package cleancode.minesweeper.tobe;
+package cleancode.minesweeper.tobe.cell;
 
 // getter, setter 지양
 

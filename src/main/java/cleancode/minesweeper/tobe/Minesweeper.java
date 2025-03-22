@@ -1,10 +1,12 @@
 package cleancode.minesweeper.tobe;
 
+import cleancode.minesweeper.tobe.game.GameInitializable;
+import cleancode.minesweeper.tobe.game.GameRunnable;
 import cleancode.minesweeper.tobe.gamelevel.GameLevel;
 import cleancode.minesweeper.tobe.io.ConsoleInputHandler;
 import cleancode.minesweeper.tobe.io.ConsoleOutputHandler;
 
-public class Minesweeper {
+public class Minesweeper implements GameRunnable, GameInitializable {
 
 	public static final int BOARD_ROW_SIZE = 8;
 	public static final int BOARD_COL_SIZE = 10;
@@ -23,9 +25,14 @@ public class Minesweeper {
 
 	private int gameStatus = 0; // 0: 게임 중, 1: 승리, -1: 패배
 
+	@Override
+	public void initialize() {
+		gameBoard.initializeGame();
+	}
+
+	@Override
 	public void run() {
 		consoleOutputHandler.showGameStartComments();
-		gameBoard.initializeGame();
 
 		while (true) {
 			try {
@@ -47,7 +54,7 @@ public class Minesweeper {
 				consoleOutputHandler.printExceptionMessage(e);
 			} catch (Exception e) {
 				consoleOutputHandler.printSimpleMessage("프로그램에 문제가 생겼습니다.");
-				e.printStackTrace();
+				break;
 			}
 		}
 	}
