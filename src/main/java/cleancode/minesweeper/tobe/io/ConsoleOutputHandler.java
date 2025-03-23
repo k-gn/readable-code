@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 
 import cleancode.minesweeper.tobe.GameBoard;
 import cleancode.minesweeper.tobe.GameException;
+import cleancode.minesweeper.tobe.position.CellPosition;
 
 public class ConsoleOutputHandler implements OutputHandler {
 
@@ -24,8 +25,9 @@ public class ConsoleOutputHandler implements OutputHandler {
 		for (int row = 0; row < board.getRowSize(); row++) {
 			System.out.printf("%2d  ", row + 1);
 			for (int col = 0; col < board.getColSize(); col++) {
+				CellPosition cellPosition = CellPosition.of(row, col);
 				// cell 이 자신을 그리는 것 보다 여기서 데이터를 받아 그려주는게 더 관심사에 맞음
-				System.out.print(board.getSign(row, col) + " ");
+				System.out.print(board.getSign(cellPosition) + " ");
 			}
 			System.out.println();
 		}
