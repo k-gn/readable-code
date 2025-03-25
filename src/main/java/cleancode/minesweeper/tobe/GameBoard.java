@@ -3,6 +3,7 @@ package cleancode.minesweeper.tobe;
 import java.util.List;
 
 import cleancode.minesweeper.tobe.cell.Cell;
+import cleancode.minesweeper.tobe.cell.CellSnapshot;
 import cleancode.minesweeper.tobe.cell.Cells;
 import cleancode.minesweeper.tobe.cell.EmptyCell;
 import cleancode.minesweeper.tobe.cell.LandMineCell;
@@ -152,5 +153,10 @@ public class GameBoard {
 			.filter(position -> position.isRowIndexLessThan(rowSize))
 			.filter(position -> position.isColIndexLessThan(colSize))
 			.toList();
+	}
+
+	public CellSnapshot getSnapshot(CellPosition cellPosition) {
+		Cell cell = findCell(cellPosition);
+		return cell.getSnapshot();
 	}
 }
