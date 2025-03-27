@@ -13,10 +13,12 @@ import cleancode.minesweeper.tobe.position.CellPosition;
 import cleancode.minesweeper.tobe.position.CellPositions;
 import cleancode.minesweeper.tobe.position.RelativePosition;
 
+// 게임 진행에 대한 책임 (실질적인 지뢰찾기 도메인 로직)
 public class GameBoard {
 
 	private final Cell[][] board;
 	private final int landMineCount;
+	private GameStatus gameStatus;
 
 	// OCP 적용 - 난이도를 쉽게 변경할 수 있다.
 	public GameBoard(GameLevel gameLevel) {
@@ -25,9 +27,11 @@ public class GameBoard {
 		board = new Cell[rowSize][colSize];
 
 		landMineCount = gameLevel.getLandMineCount();
+		initializeGameStatus();
 	}
 
 	public void initializeGame() {
+		initializeGameStatus();
 		CellPositions cellPositions = CellPositions.from(board);
 
 		initializeEmptyCells(cellPositions);
@@ -52,6 +56,10 @@ public class GameBoard {
 		for (CellPosition cellPosition : landMineCellPositions) {
 			updateCellAt(cellPosition, new LandMineCell());
 		}
+	}
+
+	private void initializeGameStatus() {
+		gameStatus = GameStatus.IN_PROGRESS;
 	}
 
 	private void initializeEmptyCells(CellPositions cellPositions) {
@@ -82,10 +90,19 @@ public class GameBoard {
 	public void flagAt(CellPosition cellPosition) {
 		Cell cell = findCell(cellPosition);
 		cell.flag();
+
+		checkIfGameIsOver();
 	}
 
-	public String getSign(CellPosition cellPosition) {
-		return findCell(cellPosition).getSign();
+	// check 라는 이름은 통상적으로 void 를 반환한다.
+	private void checkIfGameIsOver() {
+		if (isAllCellChecked()) {
+			changeGameStatusToWin();
+		}
+	}
+
+	private void changeGameStatusToWin() {
+		gameStatus = GameStatus.WIN;
 	}
 
 	private Cell findCell(CellPosition cellPosition) {
@@ -100,7 +117,7 @@ public class GameBoard {
 		return board[0].length;
 	}
 
-	public void openAt(CellPosition cellPosition) {
+	public void openOneCellAt(CellPosition cellPosition) {
 		Cell cell = findCell(cellPosition);
 		cell.open();
 	}
@@ -128,7 +145,7 @@ public class GameBoard {
 			return;
 		}
 
-		openAt(cellPosition);
+		openOneCellAt(cellPosition);
 
 		if (doesCellHaveLandMineCount(cellPosition)) {
 			return;
@@ -158,5 +175,32 @@ public class GameBoard {
 	public CellSnapshot getSnapshot(CellPosition cellPosition) {
 		Cell cell = findCell(cellPosition);
 		return cell.getSnapshot();
+	}
+
+	public boolean isInProgress() {
+		return gameStatus == GameStatus.IN_PROGRESS;
+	}
+
+	public void openAt(CellPosition cellPosition) {
+		if (isLandMineCellAt(cellPosition)) {
+			openOneCellAt(cellPosition);
+			changeGameStatusToLose();
+			return;
+		}
+
+		openSurroundedCells(cellPosition);
+		checkIfGameIsOver();
+	}
+
+	private void changeGameStatusToLose() {
+		gameStatus = GameStatus.LOSE;
+	}
+
+	public boolean isWin() {
+		return gameStatus == GameStatus.WIN;
+	}
+
+	public boolean isLose() {
+		return gameStatus == GameStatus.LOSE;
 	}
 }
