@@ -9,10 +9,10 @@ import cleancode.minesweeper.tobe.minesweeper.board.cell.Cells;
 import cleancode.minesweeper.tobe.minesweeper.board.cell.EmptyCell;
 import cleancode.minesweeper.tobe.minesweeper.board.cell.LandMineCell;
 import cleancode.minesweeper.tobe.minesweeper.board.cell.NumberCell;
-import cleancode.minesweeper.tobe.minesweeper.gamelevel.GameLevel;
 import cleancode.minesweeper.tobe.minesweeper.board.position.CellPosition;
 import cleancode.minesweeper.tobe.minesweeper.board.position.CellPositions;
 import cleancode.minesweeper.tobe.minesweeper.board.position.RelativePosition;
+import cleancode.minesweeper.tobe.minesweeper.gamelevel.GameLevel;
 
 // 게임 진행에 대한 책임 (실질적인 지뢰찾기 도메인 로직)
 public class GameBoard {
@@ -70,7 +70,10 @@ public class GameBoard {
 		}
 	}
 
-	private void updateCellAt(CellPosition cellPosition, Cell cell) {
+	private void updateCellAt(
+		CellPosition cellPosition,
+		Cell cell
+	) {
 		board[cellPosition.getRowIndex()][cellPosition.getColIndex()] = cell;
 	}
 
@@ -80,7 +83,7 @@ public class GameBoard {
 			.filter(this::isLandMineCellAt)
 			.count();
 
-		return (int) count;
+		return (int)count;
 	}
 
 	private boolean isLandMineCellAt(CellPosition cellPosition) {
@@ -205,11 +208,16 @@ public class GameBoard {
 			return;
 		}
 
-		List<CellPosition> surroundedPositions = calculateSurroundedPositions(currentCellPosition, getRowSize(), getColSize());
+		List<CellPosition> surroundedPositions = calculateSurroundedPositions(currentCellPosition, getRowSize(),
+			getColSize());
 		surroundedPositions.forEach(stack::push);
 	}
 
-	private List<CellPosition> calculateSurroundedPositions(CellPosition cellPosition, int rowSize, int colSize) {
+	private List<CellPosition> calculateSurroundedPositions(
+		CellPosition cellPosition,
+		int rowSize,
+		int colSize
+	) {
 		return RelativePosition.SURROUNDED_POSITIONS.stream()
 			.filter(cellPosition::canCalculatePositionBy)
 			.map(cellPosition::calculatePositionBy)

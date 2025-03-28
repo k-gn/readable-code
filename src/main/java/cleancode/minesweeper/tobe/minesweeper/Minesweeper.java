@@ -1,13 +1,13 @@
 package cleancode.minesweeper.tobe.minesweeper;
 
-import cleancode.minesweeper.tobe.minesweeper.board.GameBoard;
-import cleancode.minesweeper.tobe.minesweeper.config.GameConfig;
-import cleancode.minesweeper.tobe.minesweeper.exception.GameException;
 import cleancode.minesweeper.tobe.game.GameInitializable;
 import cleancode.minesweeper.tobe.game.GameRunnable;
+import cleancode.minesweeper.tobe.minesweeper.board.GameBoard;
+import cleancode.minesweeper.tobe.minesweeper.board.position.CellPosition;
+import cleancode.minesweeper.tobe.minesweeper.config.GameConfig;
+import cleancode.minesweeper.tobe.minesweeper.exception.GameException;
 import cleancode.minesweeper.tobe.minesweeper.io.InputHandler;
 import cleancode.minesweeper.tobe.minesweeper.io.OutputHandler;
-import cleancode.minesweeper.tobe.minesweeper.board.position.CellPosition;
 import cleancode.minesweeper.tobe.minesweeper.user.UserAction;
 
 // 게임 실행, 출력, 입력 등을 중간에서 호출하는 책임
@@ -59,7 +59,6 @@ public class Minesweeper implements GameRunnable, GameInitializable {
 			outputHandler.showGameLosingComment();
 		}
 	}
-
 
 	private void actOnCell(
 		CellPosition cellPosition,
