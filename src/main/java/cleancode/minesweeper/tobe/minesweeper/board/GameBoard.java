@@ -1,6 +1,7 @@
 package cleancode.minesweeper.tobe.minesweeper.board;
 
 import java.util.List;
+import java.util.Stack;
 
 import cleancode.minesweeper.tobe.minesweeper.board.cell.Cell;
 import cleancode.minesweeper.tobe.minesweeper.board.cell.CellSnapshot;
@@ -173,21 +174,39 @@ public class GameBoard {
 	}
 
 	private void openSurroundedCells(CellPosition cellPosition) {
-		if (isOpenedCell(cellPosition)) {
+		Stack<CellPosition> stack = new Stack<>();
+		stack.push(cellPosition);
+
+		while (!stack.empty()) {
+			openAndPushCellAt(stack);
+		}
+	}
+
+	/*
+		많은 스택프레임이 재귀로 인해 쌓여 스택오버플로우 발생
+		  - 스레드마다 생기는 스택 영역에는 함수를 호출할 때마다 frame 이 쌓인다.
+		  - frame 은 지역변수, 연산을 위한 정보 등을 담고있다.
+		  - 스택 영역의 크기가 제한되어 있다.
+
+		=> 필요한 CellPosition 만을 가진 Stack 자료구조를 따로 만들어 해결
+	 */
+	private void openAndPushCellAt(Stack<CellPosition> stack) {
+		CellPosition currentCellPosition = stack.pop();
+		if (isOpenedCell(currentCellPosition)) {
 			return;
 		}
-		if (isLandMineCellAt(cellPosition)) {
+		if (isLandMineCellAt(currentCellPosition)) {
 			return;
 		}
 
-		openOneCellAt(cellPosition);
+		openOneCellAt(currentCellPosition);
 
-		if (doesCellHaveLandMineCount(cellPosition)) {
+		if (doesCellHaveLandMineCount(currentCellPosition)) {
 			return;
 		}
 
-		List<CellPosition> surroundedPositions = calculateSurroundedPositions(cellPosition, getRowSize(), getColSize());
-		surroundedPositions.forEach(this::openSurroundedCells);
+		List<CellPosition> surroundedPositions = calculateSurroundedPositions(currentCellPosition, getRowSize(), getColSize());
+		surroundedPositions.forEach(stack::push);
 	}
 
 	private List<CellPosition> calculateSurroundedPositions(CellPosition cellPosition, int rowSize, int colSize) {
