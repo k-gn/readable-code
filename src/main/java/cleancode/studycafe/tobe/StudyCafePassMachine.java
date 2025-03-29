@@ -1,5 +1,7 @@
 package cleancode.studycafe.tobe;
 
+import java.util.List;
+
 import cleancode.studycafe.tobe.exception.AppException;
 import cleancode.studycafe.tobe.io.InputHandler;
 import cleancode.studycafe.tobe.io.OutputHandler;
@@ -7,8 +9,6 @@ import cleancode.studycafe.tobe.io.StudyCafeFileHandler;
 import cleancode.studycafe.tobe.model.StudyCafeLockerPass;
 import cleancode.studycafe.tobe.model.StudyCafePass;
 import cleancode.studycafe.tobe.model.StudyCafePassType;
-
-import java.util.List;
 
 public class StudyCafePassMachine {
 

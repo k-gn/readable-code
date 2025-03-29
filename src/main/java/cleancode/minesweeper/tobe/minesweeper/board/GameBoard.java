@@ -1,5 +1,7 @@
 package cleancode.minesweeper.tobe.minesweeper.board;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
@@ -177,11 +179,11 @@ public class GameBoard {
 	}
 
 	private void openSurroundedCells(CellPosition cellPosition) {
-		Stack<CellPosition> stack = new Stack<>();
-		stack.push(cellPosition);
+		Deque<CellPosition> deque = new ArrayDeque<>();
+		deque.push(cellPosition);
 
-		while (!stack.empty()) {
-			openAndPushCellAt(stack);
+		while (!deque.isEmpty()) {
+			openAndPushCellAt(deque);
 		}
 	}
 
@@ -191,10 +193,11 @@ public class GameBoard {
 		  - frame 은 지역변수, 연산을 위한 정보 등을 담고있다.
 		  - 스택 영역의 크기가 제한되어 있다.
 
-		=> 필요한 CellPosition 만을 가진 Stack 자료구조를 따로 만들어 해결
+		=> 필요한 CellPosition 만을 가진 Deque 자료구조를 따로 만들어 해결
+		 (Stack 보다 Deque 자료구조가 성능상 좋다.)
 	 */
-	private void openAndPushCellAt(Stack<CellPosition> stack) {
-		CellPosition currentCellPosition = stack.pop();
+	private void openAndPushCellAt(Deque<CellPosition> deque) {
+		CellPosition currentCellPosition = deque.pop();
 		if (isOpenedCell(currentCellPosition)) {
 			return;
 		}
@@ -210,7 +213,7 @@ public class GameBoard {
 
 		List<CellPosition> surroundedPositions = calculateSurroundedPositions(currentCellPosition, getRowSize(),
 			getColSize());
-		surroundedPositions.forEach(stack::push);
+		surroundedPositions.forEach(deque::push);
 	}
 
 	private List<CellPosition> calculateSurroundedPositions(
