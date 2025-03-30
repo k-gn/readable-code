@@ -12,11 +12,22 @@ import cleancode.studycafe.tobe.model.StudyCafeSeatPass;
 import cleancode.studycafe.tobe.model.StudyCafePassType;
 import cleancode.studycafe.tobe.model.StudyCafeSeatPasses;
 import cleancode.studycafe.tobe.model.order.StudyCafePassOrder;
+import cleancode.studycafe.tobe.provider.LockerPassProvider;
+import cleancode.studycafe.tobe.provider.SeatPassProvider;
 
 public class StudyCafePassMachine {
 
 	private final StudyCafeIOHandler ioHandler = new StudyCafeIOHandler();
-	private final StudyCafeFileHandler studyCafeFileHandler = new StudyCafeFileHandler();
+	private final SeatPassProvider seatPassProvider;
+	private final LockerPassProvider lockerPassProvider;
+
+	public StudyCafePassMachine(
+		SeatPassProvider seatPassProvider,
+		LockerPassProvider lockerPassProvider
+	) {
+		this.seatPassProvider = seatPassProvider;
+		this.lockerPassProvider = lockerPassProvider;
+	}
 
 	public void run() {
 		try {
@@ -47,7 +58,7 @@ public class StudyCafePassMachine {
 	}
 
 	private List<StudyCafeSeatPass> findPassCandidatesBy(StudyCafePassType passType) {
-		StudyCafeSeatPasses allPasses = studyCafeFileHandler.readStudyCafePasses();
+		StudyCafeSeatPasses allPasses = seatPassProvider.getSeatPasses();
 		return allPasses.findPassBy(passType);
 	}
 
@@ -70,7 +81,7 @@ public class StudyCafePassMachine {
 	}
 
 	private Optional<StudyCafeLockerPass> findLockerPassCandidatesBy(StudyCafeSeatPass selectedPass) {
-		StudyCafeLockerPasses allLockerPasses = studyCafeFileHandler.readLockerPasses();
+		StudyCafeLockerPasses allLockerPasses = lockerPassProvider.getLockerPasses();
 		return allLockerPasses.findLockerPassBy(selectedPass);
 	}
 
