@@ -68,4 +68,7 @@ public class OutputHandler {
 		System.out.println(message);
 	}
 
+	public void showPassOrderSummary(StudyCafePass selectedPass) {
+		showPassOrderSummary(selectedPass, null);
+	}
 }
