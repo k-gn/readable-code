@@ -8,9 +8,10 @@ import cleancode.studycafe.tobe.io.StudyCafeFileHandler;
 import cleancode.studycafe.tobe.io.StudyCafeIOHandler;
 import cleancode.studycafe.tobe.model.StudyCafeLockerPass;
 import cleancode.studycafe.tobe.model.StudyCafeLockerPasses;
-import cleancode.studycafe.tobe.model.StudyCafePass;
+import cleancode.studycafe.tobe.model.StudyCafeSeatPass;
 import cleancode.studycafe.tobe.model.StudyCafePassType;
-import cleancode.studycafe.tobe.model.StudyCafePasses;
+import cleancode.studycafe.tobe.model.StudyCafeSeatPasses;
+import cleancode.studycafe.tobe.model.order.StudyCafePassOrder;
 
 public class StudyCafePassMachine {
 
@@ -22,15 +23,15 @@ public class StudyCafePassMachine {
 			ioHandler.showWelcomeMessage();
 			ioHandler.showAnnouncement();
 
-			StudyCafePass selectedPass = selectPass();
-
+			StudyCafeSeatPass selectedPass = selectPass();
 			Optional<StudyCafeLockerPass> optionalLockerPass = selectLockerPass(selectedPass);
 
-			optionalLockerPass.ifPresentOrElse(
-				lockerPass -> ioHandler.showPassOrderSummary(selectedPass, lockerPass),
-				() -> ioHandler.showPassOrderSummary(selectedPass)
+			StudyCafePassOrder passOrder = StudyCafePassOrder.of(
+				selectedPass,
+				optionalLockerPass.orElse(null)
 			);
 
+			ioHandler.showPassOrderSummary(passOrder);
 		} catch (AppException e) {
 			ioHandler.showSimpleMessage(e.getMessage());
 		} catch (Exception e) {
@@ -38,19 +39,19 @@ public class StudyCafePassMachine {
 		}
 	}
 
-	private StudyCafePass selectPass() {
+	private StudyCafeSeatPass selectPass() {
 		StudyCafePassType passType = ioHandler.askPassTypeSelecting();
-		List<StudyCafePass> passCandidates = findPassCandidatesBy(passType);
+		List<StudyCafeSeatPass> passCandidates = findPassCandidatesBy(passType);
 
 		return ioHandler.askPassSelecting(passCandidates);
 	}
 
-	private List<StudyCafePass> findPassCandidatesBy(StudyCafePassType passType) {
-		StudyCafePasses allPasses = studyCafeFileHandler.readStudyCafePasses();
+	private List<StudyCafeSeatPass> findPassCandidatesBy(StudyCafePassType passType) {
+		StudyCafeSeatPasses allPasses = studyCafeFileHandler.readStudyCafePasses();
 		return allPasses.findPassBy(passType);
 	}
 
-	private Optional<StudyCafeLockerPass> selectLockerPass(StudyCafePass selectedPass) {
+	private Optional<StudyCafeLockerPass> selectLockerPass(StudyCafeSeatPass selectedPass) {
 		if (selectedPass.canNotUseLocker()) {
 			return Optional.empty();
 		}
@@ -68,7 +69,7 @@ public class StudyCafePassMachine {
 		return Optional.empty();
 	}
 
-	private Optional<StudyCafeLockerPass> findLockerPassCandidatesBy(StudyCafePass selectedPass) {
+	private Optional<StudyCafeLockerPass> findLockerPassCandidatesBy(StudyCafeSeatPass selectedPass) {
 		StudyCafeLockerPasses allLockerPasses = studyCafeFileHandler.readLockerPasses();
 		return allLockerPasses.findLockerPassBy(selectedPass);
 	}

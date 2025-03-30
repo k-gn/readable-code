@@ -15,7 +15,7 @@ public class StudyCafeLockerPasses {
 		return new StudyCafeLockerPasses(passes);
 	}
 
-	public Optional<StudyCafeLockerPass> findLockerPassBy(StudyCafePass selectedPass) {
+	public Optional<StudyCafeLockerPass> findLockerPassBy(StudyCafeSeatPass selectedPass) {
 		return this.lockerPasses.stream()
 			.filter(selectedPass::isSameDurationType)
 			.findFirst();
