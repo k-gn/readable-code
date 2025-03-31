@@ -18,7 +18,12 @@ public enum StudyCafePassType {
 	public boolean isLockerType() {
 		return LOCKER_TYPES.contains(this);
 	}
+
 	public boolean isNotLockerType() {
 		return !isLockerType();
+	}
+
+	public String getDescription() {
+		return description;
 	}
 }

@@ -3,8 +3,8 @@ package cleancode.studycafe.tobe.io;
 import java.util.List;
 
 import cleancode.studycafe.tobe.model.StudyCafeLockerPass;
-import cleancode.studycafe.tobe.model.StudyCafeSeatPass;
 import cleancode.studycafe.tobe.model.StudyCafePassType;
+import cleancode.studycafe.tobe.model.StudyCafeSeatPass;
 import cleancode.studycafe.tobe.model.order.StudyCafePassOrder;
 
 public class StudyCafeIOHandler {
