@@ -3,7 +3,6 @@ package cleancode.minesweeper.tobe.minesweeper.board;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 import cleancode.minesweeper.tobe.minesweeper.board.cell.Cell;
 import cleancode.minesweeper.tobe.minesweeper.board.cell.CellSnapshot;
