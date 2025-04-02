@@ -68,7 +68,7 @@ public class OutputHandler {
 	}
 
 	public void showPassOrderSummary(StudyCafePassOrder passOrder) {
-		StudyCafeSeatPass seatPass = passOrder.getSeatPass();
+		StudyCafeSeatPass seatPass = passOrder.seatPass();
 		Optional<StudyCafeLockerPass> optionalLockerPass = passOrder.getLockerPass();
 
 		System.out.println();

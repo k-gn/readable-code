@@ -83,5 +83,4 @@ public class StudyCafePassMachine {
 		StudyCafeLockerPasses allLockerPasses = lockerPassProvider.getLockerPasses();
 		return allLockerPasses.findLockerPassBy(selectedPass);
 	}
-
 }

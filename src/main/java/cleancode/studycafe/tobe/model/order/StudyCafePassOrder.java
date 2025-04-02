@@ -5,28 +5,16 @@ import java.util.Optional;
 import cleancode.studycafe.tobe.model.StudyCafeLockerPass;
 import cleancode.studycafe.tobe.model.StudyCafeSeatPass;
 
-public class StudyCafePassOrder {
-
-	private final StudyCafeSeatPass seatPass;
-	private final StudyCafeLockerPass lockerPass;
-
-	private StudyCafePassOrder(
-		StudyCafeSeatPass seatPass,
-		StudyCafeLockerPass lockerPass
-	) {
-		this.seatPass = seatPass;
-		this.lockerPass = lockerPass;
-	}
+public record StudyCafePassOrder(
+	StudyCafeSeatPass seatPass,
+	StudyCafeLockerPass lockerPass
+) {
 
 	public static StudyCafePassOrder of(
 		StudyCafeSeatPass seatPass,
 		StudyCafeLockerPass lockerPass
 	) {
 		return new StudyCafePassOrder(seatPass, lockerPass);
-	}
-
-	public StudyCafeSeatPass getSeatPass() {
-		return seatPass;
 	}
 
 	public Optional<StudyCafeLockerPass> getLockerPass() {
