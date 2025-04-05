@@ -14,16 +14,12 @@ public class InputHandler {
 	public StudyCafePassType getPassTypeSelectingUserAction() {
 		String userInput = SCANNER.nextLine();
 
-		if ("1".equals(userInput)) {
-			return StudyCafePassType.HOURLY;
-		}
-		if ("2".equals(userInput)) {
-			return StudyCafePassType.WEEKLY;
-		}
-		if ("3".equals(userInput)) {
-			return StudyCafePassType.FIXED;
-		}
-		throw new AppException("잘못된 입력입니다.");
+		return switch (userInput) {
+			case "1" -> StudyCafePassType.HOURLY;
+			case "2" -> StudyCafePassType.WEEKLY;
+			case "3" -> StudyCafePassType.FIXED;
+			default -> throw new AppException("잘못된 입력입니다.");
+		};
 	}
 
 	public StudyCafeSeatPass getSelectPass(List<StudyCafeSeatPass> passes) {
