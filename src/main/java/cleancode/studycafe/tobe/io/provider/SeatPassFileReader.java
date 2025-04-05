@@ -18,8 +18,8 @@ public class SeatPassFileReader implements SeatPassProvider {
 	@Override
 	public StudyCafeSeatPasses getSeatPasses() {
 		try {
-			List<String> lines = Files.readAllLines(Paths.get(PASS_LIST_CSV_PATH));
 			List<StudyCafeSeatPass> studyCafeSeatPasses = new ArrayList<>();
+			List<String> lines = Files.readAllLines(Paths.get(PASS_LIST_CSV_PATH));
 			for (String line : lines) {
 				String[] values = line.split(",");
 				StudyCafePassType studyCafePassType = StudyCafePassType.valueOf(values[0]);

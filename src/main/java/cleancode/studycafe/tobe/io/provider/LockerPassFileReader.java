@@ -18,8 +18,8 @@ public class LockerPassFileReader implements LockerPassProvider {
 	@Override
 	public StudyCafeLockerPasses getLockerPasses() {
 		try {
-			List<String> lines = Files.readAllLines(Paths.get(LOCKER_LIST_CSV_PATH));
 			List<StudyCafeLockerPass> lockerPasses = new ArrayList<>();
+			List<String> lines = Files.readAllLines(Paths.get(LOCKER_LIST_CSV_PATH));
 			for (String line : lines) {
 				String[] values = line.split(",");
 				StudyCafePassType studyCafePassType = StudyCafePassType.valueOf(values[0]);
